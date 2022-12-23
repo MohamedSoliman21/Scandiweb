@@ -1,0 +1,76 @@
+{
+  "Products": [
+    {
+      "id": 1,
+      "sku": "JVC200123",
+      "name": "Disc",
+      "price": "300",
+      "productType": "DVD",
+      "size": "325",
+      "height": "",
+      "width": "",
+      "length": "",
+      "weight": ""
+    },
+    {
+      "id": 2,
+      "sku": "JVC200123",
+      "name": "Disc",
+      "price": "300",
+      "productType": "DVD",
+      "size": "850",
+      "height": "",
+      "width": "",
+      "length": "",
+      "weight": ""
+    },
+    {
+      "id": 3,
+      "sku": "GGWP0007",
+      "name": "Book",
+      "price": "100",
+      "productType": "Book",
+      "size": "",
+      "height": "",
+      "width": "",
+      "length": "",
+      "weight": "40"
+    },
+    {
+      "id": 4,
+      "sku": "GGWP0007",
+      "name": "Book",
+      "price": "100",
+      "productType": "Book",
+      "size": "",
+      "height": "",
+      "width": "",
+      "length": "",
+      "weight": "35"
+    },
+    {
+      "id": 5,
+      "sku": "TR120555",
+      "name": "Furniture",
+      "price": "250",
+      "productType": "Furniture",
+      "size": "325",
+      "height": "14",
+      "width": "65",
+      "length": "68",
+      "weight": ""
+    },
+    {
+      "id": 6,
+      "sku": "TR120555",
+      "name": "Furniture",
+      "price": "250",
+      "productType": "Furniture",
+      "size": "325",
+      "height": "75",
+      "width": "68",
+      "length": "26",
+      "weight": ""
+    }
+  ]
+}
