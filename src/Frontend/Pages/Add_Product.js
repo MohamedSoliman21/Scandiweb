@@ -4,41 +4,47 @@ import { Link } from "react-router-dom";
 import DVD from "../Components/Products/DVD";
 import Book from "../Components/Products/Book";
 import Furniture from "../Components/Products/Furniture";
-import Notification from "../Components/Notification";
+import axios from "axios";
 
 const Add_Product = () => {
 
-    const [IsDuplicate, setIsDuplicate] = useState(true)
-    const [formDataResponse, setFormDataResponse] = useState({});
+    const [IsDuplicate, setIsDuplicate] = useState()
     const [Products, setProducts] = useState([]);
     const navigate = useNavigate();
+    const URL = "http://localhost/Scandiweb/Index.php"
+    const [PType, setPType] = useState("");
 
     const options = [
-        {id: 1, value: 'DVD', attribute: 'size (MB)'},
-        {id: 3, value: 'Furniture', attribute: ['length (CM)' , 'width (CM)' , 'height (CM)']},
-        {id: 2, value: 'Book', attribute: 'weight (KG)'}
+        {id: 1, value: 'DVD'},
+        {id: 2, value: 'Book'},
+        {id: 3, value: 'Furniture'}
+        
     ];
 
-    useEffect(() =>{
-        fetch('http://localhost:8000/Products')
-        .then(res => {
-            return res.json();
+    useEffect(() => {
+        GetProducts()
+    }, [])
+
+    const GetProducts = () => {
+        axios.get(URL).then((response) => {
+            setProducts(response.data)
         })
-        .then((data) => {
-            setProducts(data);
-        });
-    }, []);
+    }
     
     const [ProductData, setProductData] = useState({
-        sku: "",
-        name: "",
-        price: "",
-        productType: "",
-        size: "",
-        height: "",
-        width: "",
-        length: "",
-        weight: ""
+        SKU: "",
+        Name: "",
+        Price: "",
+        ProductType: "",
+        Attributes: [
+            {Size: ""},
+            {Weight: ""},
+            {Dimensions: [{
+                Height: "",
+                Width: "",
+                Length: ""
+            }]
+        }]
       });
 
     const handleChange = (e) => {
@@ -50,7 +56,7 @@ const Add_Product = () => {
             };
         });
     }
-    
+
     const handleSelectChange = (e) => {
         const { id, value, type, checked } = e.target;
         setProductData((prevData) => {
@@ -59,14 +65,15 @@ const Add_Product = () => {
             [id]: type === "checkbox" ? checked : value,
             };
         });
+        setPType(value)
     }
-    
+
     const handleInvalid = (e) => {
-        const { id, type, checked } = e.target;
+        const { id, value, type, checked } = e.target;
         setProductData((prevData) => {
             return {
             ...prevData,
-            [id]: type === "checkbox" ? checked : <Notification message="Please, provide the data of indicated type"/>,
+            [id]: type === "checkbox" ? checked : value,
             };
         });
     }
@@ -82,49 +89,40 @@ const Add_Product = () => {
         });
     }
 
-    const handleData = (e) => {
-        const Data = new URLSearchParams();
-        Data.append("sku", ProductData.sku);
-        Data.append("name", ProductData.name);
-        Data.append("price", ProductData.price);
-        Data.append("productType", ProductData.productType);
-        Data.append("height", ProductData.height);
-        Data.append("width", ProductData.height);
-        Data.append("length", ProductData.height);
-        Data.append("size", ProductData.size);
-        Data.append("weight", ProductData.weight);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        let config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+        let Data = new URLSearchParams();
+        Data.append("SKU", ProductData.SKU);
+        Data.append("Name", ProductData.Name);
+        Data.append("Price", ProductData.Price);
+        Data.append("ProductType", ProductData.ProductType);
+        Data.append("Size", ProductData.Attributes.Size);
+        Data.append("Weight", ProductData.Attributes.Weight);
+        Data.append("Dimensions", 
+        ProductData?.Attributes?.Dimensions?.Height + "x" + ProductData?.Attributes?.Dimensions?.Width + "x" + ProductData?.Attributes?.Dimensions?.Length);
+        
+        if(IsDuplicate === false){
+            axios.post(URL, ProductData, config)
+            .then((result) => {
+                if(result.status === 200){
+                    navigate("/");
+                }
+            })
+        } 
+    }
 
+    useEffect(() => {
         for(let i = 0;  i < Products.length; i++){
-            console.log(Products.length)
-            console.log(IsDuplicate)
-            console.log(Products[i].sku)
-            if(ProductData.sku == Products[i].sku){
-                console.log(Products.length)
+            if(ProductData.SKU === Products[i].SKU){
                 setIsDuplicate(true)
                 break
             }
             else {
                 setIsDuplicate(false)
             }
-        }
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        handleData()
-
-        if(IsDuplicate !== true){
-            fetch("http://localhost:8000/Products/", { 
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(ProductData),
-            }).then((response) => response.json())
-            .then((result) => {
-                setFormDataResponse(result);
-                navigate("/");
-            })
         } 
-    }
+    }, )
 
     return ( 
         <div className="add_product">
@@ -132,31 +130,32 @@ const Add_Product = () => {
                 <p>Add Product</p>
                 <div className="links">
                     <div className="AddProductLinks">
-                        <button form="ProductForm" type="submit" onClick={handleData}>Save</button>
+                        <button id="save-btn" form="product_form" type="submit">Save</button>
                         <Link to='/'><button id="cancel-btn">Cancel</button></Link>
                     </div>
                 </div>
             </nav>
 
-            <form id="product_form" method="get" onSubmit={handleSubmit}>
+            <form 
+            id="product_form" 
+            method="post" 
+            onSubmit={handleSubmit}>
+                {IsDuplicate && <div id="Warning">SKU Already Exists</div>}
+
                 <div className="row">
                     <div className="col-10">
                         <label htmlFor="sku">SKU</label>
                     </div>
+
                     <div className="col-75">
                         <input 
                             type="text" 
-                            id="sku"
-                            name="sku" 
-                            value={ProductData.sku}
+                            id="SKU"
+                            name="SKU" 
+                            value={ProductData.SKU}
                             className="form-control"
                             onChange={handleChange}
                             required></input>
-                    </div>
-                    <div>
-                    <div className="text-danger" role="alert">
-                        {formDataResponse.error_message}
-                    </div>
                     </div>
                 </div>
                 
@@ -164,12 +163,13 @@ const Add_Product = () => {
                     <div className="col-10">
                         <label htmlFor="name">Name</label>
                     </div>
+
                     <div className="col-75">
                         <input
                             type="text" 
-                            id="name"
-                            name="name"
-                            value={ProductData.name}
+                            id="Name"
+                            name="Name"
+                            value={ProductData.Name}
                             className="form-control"
                             onChange={handleChange}
                             ></input>
@@ -180,13 +180,14 @@ const Add_Product = () => {
                     <div className="col-10">
                         <label htmlFor="Price">Price</label>
                     </div>
+
                     <div className="col-75">
                         <input 
                             type="number"
                             min="0" 
-                            id="price"
-                            name="price" 
-                            value={ProductData.price}
+                            id="Price"
+                            name="Price" 
+                            value={ProductData.Price}
                             className="form-control"
                             onChange={handleChange}
                             onInvalid= {handleInvalid}
@@ -199,18 +200,19 @@ const Add_Product = () => {
                     <div className="col-10">
                         <label htmlFor="productType">Type Switcher</label>
                     </div>
+
                     <div className="col-75">
                         <select 
-                            id="productType" 
-                            name="productType"
+                            id="ProductType" 
+                            name="ProductType"
                             className="form-control"
-                            value={ProductData.productType}
+                            value={ProductData.ProductType}
                             onChange={handleSelectChange}
                             required>
                                 <option value="">Choose a Type</option>
                                 {options.map(option => (
                                     <option 
-                                        id={option.value}
+                                        id={option.id}
                                         key={option.value} 
                                         name={option.value} 
                                         value={option.value}>
@@ -220,33 +222,34 @@ const Add_Product = () => {
                         </select>
                     </div>
                 </div>
+
                 <div id="DynamicAttributes">
-                    {ProductData.productType === "DVD" && (
+                    {ProductData.ProductType === "DVD" && (
                         <DVD
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getDVDValue={ProductData.size}
+                            getDVDValue={ProductData.Attributes.Size}
                         />
                     )}
 
-                    {ProductData.productType === "Book" && (
+                    {ProductData.ProductType === "Book" && (
                         <Book
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getBookValue={ProductData.weight}
+                            getBookValue={ProductData.Attributes.Weight}
                         />
                     )}
 
-                    {ProductData.productType === "Furniture" && (
+                    {ProductData.ProductType === "Furniture" && (
                         <Furniture
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getFurnitureHeight={ProductData.height}
-                            getFurnitureWidth={ProductData.width}
-                            getFurnitureLength={ProductData.length}
+                            getFurnitureHeight={ProductData?.Attributes?.Dimensions?.Height}
+                            getFurnitureWidth={ProductData?.Attributes?.Dimensions?.Width}
+                            getFurnitureLength={ProductData?.Attributes?.Dimensions?.Length}
                         />
                     )}
                 </div>

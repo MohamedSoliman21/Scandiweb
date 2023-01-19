@@ -1,0 +1,175 @@
+
+$L_btn_color: green;
+$R_btn_color: red;
+$Text_Color: white;
+$Black_Color: black;
+$flex_Display: flex;
+
+.navbar {
+  padding: 10px;
+  display: $flex_Display;
+  align-items: center;
+  border-bottom: 1px solid $Black_Color;
+  line-height: 10px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  
+  p{
+    font: {
+      size: 30px;
+      weight: bold; 
+    };
+  }
+  .links{
+    margin-left: auto;
+    display: $flex_Display;
+  }
+  button{
+    padding: 5px;
+    margin: 3px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  #add-product-btn{
+    background-color: $L_btn_color;
+    color: $Text_Color;
+  }
+  #add-product-btn:hover{
+      background-color: $Text_Color;
+      color: $L_btn_color;
+      border-color: $L_btn_color;
+  }
+  #delete-product-btn{
+    background-color: $R_btn_color;
+    color: $Text_Color;
+  }
+  #delete-product-btn:hover{
+    background-color: $Text_Color;
+    color: $R_btn_color;
+    border-color: $R_btn_color;
+  }
+  #save-btn{
+    background-color: $L_btn_color;
+    color: $Text_Color;
+  }
+  #save-btn:hover{
+    background-color: $Text_Color;
+    color: $L_btn_color;
+    border-color: $L_btn_color;
+  }
+  #cancel-btn{
+    background-color: $R_btn_color;
+    color: $Text_Color;
+  }
+  #cancel-btn:hover{
+    background-color: $Text_Color;
+    color: $R_btn_color;
+    border-color: $R_btn_color;
+  }
+
+}
+
+#LoadingSpinner{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.product-preview{
+  border: 1px solid $Black_Color;
+  display: inline-block;
+  padding: 20px;
+  margin: 8px;
+  margin-bottom: 20px;
+  width: 20%;
+  line-height: 5px;
+
+  .product-details{
+    text-align: center;
+  }
+  #delete-checkbox{
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    accent-color: $R_btn_color;
+    left: 0%;
+  }
+  #delete-checkbox:hover {
+    background-color: gray;
+  }
+}
+
+
+.App{
+  padding: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
+  max-width: 80%;
+  display: block;
+}
+
+#product_form{
+  margin: 0px;
+
+  #Warning{
+    margin-top: 15px;
+    margin-left: 8%;
+    color: $R_btn_color;
+  }
+  #ProductType{
+    width: 72%;
+    height: 125%;
+    color: #000;
+    background-color: #eeeeee;
+  }
+  .row{
+    display: $flex_Display;
+  }
+  .col-10 {
+    width: 10%;
+    margin-top: 15px;
+    padding: 5px;
+  }
+  .col-75 {
+    width: 20%;
+    margin-top: 15px;
+    padding: 5px;
+  }
+}
+
+.Notify{
+  margin: 8px;
+  margin-left: 8%;
+  font-size: 16px;
+}
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  padding: 1rem;
+  border-top: 1px solid $Black_Color;
+  text-align: center;
+  width: 77%;
+  max-width: 77%;
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+}

@@ -1,19 +1,19 @@
 import React from "react";
 
-const DVD = (props) => {
+const Book = (props) => {
   return (
-    <div className="">
+    <div>
       <div className="row">
         <div className="col-10">
-          <label htmlFor="size">Size (MB)</label>
+          <label htmlFor="weight">Weight (KG)</label>
         </div>
         <div className="col-75">
           <input
             type="number"
             min="0"
-            id="size"
+            id="Weight"
+            value={props.getBookValue}
             onChange={props.runHandleChange}
-            value={props.getDVDValue}
             onInvalid={props.runHandleInvalid}
             onInput={props.runHandleOnInput}
             required
@@ -21,10 +21,10 @@ const DVD = (props) => {
         </div>
       </div>
       <div className="Notify">
-        <p>Please, provide size</p>
+        <p>Please, provide weight</p>
       </div>
     </div>
   );
 }
 
-export default DVD
+export default Book

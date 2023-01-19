@@ -5,13 +5,13 @@ const Furniture = (props) => {
     <div className="">
       <div className="row">
         <div className="col-10">
-          <label htmlFor="height">Height (CM)</label>
+          <label htmlFor="Height">Height (CM)</label>
         </div>
         <div className="col-75">
           <input
             type="number"
             min="0"
-            id="height"
+            id="Height"
             value={props.getFurnitureHeight}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
@@ -22,13 +22,13 @@ const Furniture = (props) => {
       </div>
       <div className="row">
         <div className="col-10">
-          <label htmlFor="width">Width (CM)</label>
+          <label htmlFor="Width">Width (CM)</label>
         </div>
         <div className="col-75">
           <input
             type="number"
             min="0"
-            id="width"
+            id="Width"
             value={props.getFurnitureWidth}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
@@ -39,13 +39,13 @@ const Furniture = (props) => {
       </div>
       <div className="row">
         <div className="col-10">
-          <label htmlFor="length">Length (CM)</label>
+          <label htmlFor="Length">Length (CM)</label>
         </div>
         <div className="col-75">
           <input
             type="number"
             min="0"
-            id="length"
+            id="Length"
             value={props.getFurnitureLength}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
