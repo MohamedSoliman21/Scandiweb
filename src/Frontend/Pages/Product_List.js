@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import LoadingSpinner from "../Components/LoadingSpinner";
 
-const Product_List = (props, ref) => {
+const Product_List = () => {
 
-    const URL = "http://localhost/Scandiweb/Index.php";
+    const URL = "/Scandiweb/Index.php";
     const [isLoading, setIsLoading] = useState(true);
     const [Products, setProducts] = useState([]);
     const [isChecked, setIsChecked] = useState([]);
@@ -41,7 +41,7 @@ const Product_List = (props, ref) => {
         }
         const Timer = setTimeout(() => {
         GetProducts();
-        }, 1000);
+        }, 500);
 
         return () => clearTimeout(Timer);
 
@@ -49,13 +49,13 @@ const Product_List = (props, ref) => {
 
     const DeleteSelected = (e) =>{
         for(var i = 0; i < SelectedProductsID.length; i++){
-            axios.post("http://localhost/Scandiweb/Index.php/?delete=" + SelectedProductsID[i])
+            axios.post(URL + "/?delete=" + SelectedProductsID[i])
             setProducts((current) =>
             current.filter((Product) => Product.id !== SelectedProductsID[i])
             );
+            setIsLoading(true);
         }
     }
-    // useImperativeHandle(ref, () => ({DeleteSelected}), [])
 
     return ( 
         <div className="product_list">

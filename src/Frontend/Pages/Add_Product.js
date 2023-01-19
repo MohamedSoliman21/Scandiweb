@@ -11,7 +11,7 @@ const Add_Product = () => {
     const [IsDuplicate, setIsDuplicate] = useState()
     const [Products, setProducts] = useState([]);
     const navigate = useNavigate();
-    const URL = "http://localhost/Scandiweb/Index.php"
+    const URL = "/Scandiweb/Index.php"
     const [PType, setPType] = useState("");
 
     const options = [
@@ -32,17 +32,17 @@ const Add_Product = () => {
     }
     
     const [ProductData, setProductData] = useState({
-        SKU: "",
-        Name: "",
-        Price: "",
-        ProductType: "",
-        Attributes: [
-            {Size: ""},
-            {Weight: ""},
-            {Dimensions: [{
-                Height: "",
-                Width: "",
-                Length: ""
+        sku: "",
+        name: "",
+        price: "",
+        productType: "",
+        attributes: [
+            {size: ""},
+            {weight: ""},
+            {dimensions: [{
+                height: "",
+                width: "",
+                length: ""
             }]
         }]
       });
@@ -93,14 +93,14 @@ const Add_Product = () => {
         e.preventDefault();
         let config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
         let Data = new URLSearchParams();
-        Data.append("SKU", ProductData.SKU);
-        Data.append("Name", ProductData.Name);
-        Data.append("Price", ProductData.Price);
-        Data.append("ProductType", ProductData.ProductType);
-        Data.append("Size", ProductData.Attributes.Size);
-        Data.append("Weight", ProductData.Attributes.Weight);
+        Data.append("SKU", ProductData.sku);
+        Data.append("Name", ProductData.name);
+        Data.append("Price", ProductData.price);
+        Data.append("ProductType", ProductData.productType);
+        Data.append("Size", ProductData.attributes.Size);
+        Data.append("Weight", ProductData.attributes.Weight);
         Data.append("Dimensions", 
-        ProductData?.Attributes?.Dimensions?.Height + "x" + ProductData?.Attributes?.Dimensions?.Width + "x" + ProductData?.Attributes?.Dimensions?.Length);
+        ProductData?.attributes?.Dimensions?.Height + "x" + ProductData?.attributes?.Dimensions?.Width + "x" + ProductData?.attributes?.Dimensions?.Length);
         
         if(IsDuplicate === false){
             axios.post(URL, ProductData, config)
@@ -114,7 +114,7 @@ const Add_Product = () => {
 
     useEffect(() => {
         for(let i = 0;  i < Products.length; i++){
-            if(ProductData.SKU === Products[i].SKU){
+            if(ProductData.sku === Products[i].SKU){
                 setIsDuplicate(true)
                 break
             }
@@ -150,9 +150,9 @@ const Add_Product = () => {
                     <div className="col-75">
                         <input 
                             type="text" 
-                            id="SKU"
+                            id="sku"
                             name="SKU" 
-                            value={ProductData.SKU}
+                            value={ProductData.sku}
                             className="form-control"
                             onChange={handleChange}
                             required></input>
@@ -167,9 +167,9 @@ const Add_Product = () => {
                     <div className="col-75">
                         <input
                             type="text" 
-                            id="Name"
+                            id="name"
                             name="Name"
-                            value={ProductData.Name}
+                            value={ProductData.name}
                             className="form-control"
                             onChange={handleChange}
                             ></input>
@@ -185,9 +185,9 @@ const Add_Product = () => {
                         <input 
                             type="number"
                             min="0" 
-                            id="Price"
+                            id="price"
                             name="Price" 
-                            value={ProductData.Price}
+                            value={ProductData.price}
                             className="form-control"
                             onChange={handleChange}
                             onInvalid= {handleInvalid}
@@ -203,10 +203,10 @@ const Add_Product = () => {
 
                     <div className="col-75">
                         <select 
-                            id="ProductType" 
+                            id="productType" 
                             name="ProductType"
                             className="form-control"
-                            value={ProductData.ProductType}
+                            value={ProductData.productType}
                             onChange={handleSelectChange}
                             required>
                                 <option value="">Choose a Type</option>
@@ -224,32 +224,32 @@ const Add_Product = () => {
                 </div>
 
                 <div id="DynamicAttributes">
-                    {ProductData.ProductType === "DVD" && (
+                    {ProductData.productType === "DVD" && (
                         <DVD
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getDVDValue={ProductData.Attributes.Size}
+                            getDVDValue={ProductData.attributes.Size}
                         />
                     )}
 
-                    {ProductData.ProductType === "Book" && (
+                    {ProductData.productType === "Book" && (
                         <Book
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getBookValue={ProductData.Attributes.Weight}
+                            getBookValue={ProductData.attributes.Weight}
                         />
                     )}
 
-                    {ProductData.ProductType === "Furniture" && (
+                    {ProductData.productType === "Furniture" && (
                         <Furniture
                             runHandleChange={handleChange}
                             runHandleOnInput={handleOnInput}
                             runHandleInvalid={handleInvalid}
-                            getFurnitureHeight={ProductData?.Attributes?.Dimensions?.Height}
-                            getFurnitureWidth={ProductData?.Attributes?.Dimensions?.Width}
-                            getFurnitureLength={ProductData?.Attributes?.Dimensions?.Length}
+                            getFurnitureHeight={ProductData?.attributes?.Dimensions?.Height}
+                            getFurnitureWidth={ProductData?.attributes?.Dimensions?.Width}
+                            getFurnitureLength={ProductData?.attributes?.Dimensions?.Length}
                         />
                     )}
                 </div>

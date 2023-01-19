@@ -11,7 +11,7 @@ const DVD = (props) => {
           <input
             type="number"
             min="0"
-            id="Size"
+            id="size"
             onChange={props.runHandleChange}
             value={props.getDVDValue}
             onInvalid={props.runHandleInvalid}

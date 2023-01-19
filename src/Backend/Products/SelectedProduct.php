@@ -14,12 +14,12 @@ class SelectedProduct{
 
     public function ADD(){        
         $Product = $this->SimpleFactory->CreateProduct($this->type);
-        $SKU = $_REQUEST["SKU"];
-        $Name = $_REQUEST["Name"];
-        $Price = $_REQUEST["Price"];
-        $Size = $_REQUEST["Size"];
-        $Weight = $_REQUEST["Weight"];
-        $Dimensions = array($_REQUEST["Height"], $_REQUEST["Width"], $_REQUEST["Length"]);
+        $SKU = $_REQUEST["sku"];
+        $Name = $_REQUEST["name"];
+        $Price = $_REQUEST["price"];
+        $Size = $_REQUEST["size"];
+        $Weight = $_REQUEST["weight"];
+        $Dimensions = array($_REQUEST["height"], $_REQUEST["width"], $_REQUEST["length"]);
         $Attributes = array($Size, $Weight, $Dimensions);
         
         $Product->setSKU($SKU);

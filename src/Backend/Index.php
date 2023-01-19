@@ -32,7 +32,7 @@ switch($method){
             $Furniture->DELETE($delete);
         }
         else{
-            $ProductType = $_REQUEST["ProductType"];
+            $ProductType = $_REQUEST["productType"];
 
             $Product = new SelectedProduct(new ProductFactory());
             $Product->setType($ProductType);

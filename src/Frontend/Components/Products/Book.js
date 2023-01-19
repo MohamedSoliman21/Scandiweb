@@ -11,7 +11,7 @@ const Book = (props) => {
           <input
             type="number"
             min="0"
-            id="Weight"
+            id="weight"
             value={props.getBookValue}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}

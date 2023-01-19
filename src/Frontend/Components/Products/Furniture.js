@@ -11,7 +11,7 @@ const Furniture = (props) => {
           <input
             type="number"
             min="0"
-            id="Height"
+            id="height"
             value={props.getFurnitureHeight}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
@@ -28,7 +28,7 @@ const Furniture = (props) => {
           <input
             type="number"
             min="0"
-            id="Width"
+            id="width"
             value={props.getFurnitureWidth}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
@@ -45,7 +45,7 @@ const Furniture = (props) => {
           <input
             type="number"
             min="0"
-            id="Length"
+            id="length"
             value={props.getFurnitureLength}
             onChange={props.runHandleChange}
             onInvalid={props.runHandleInvalid}
