@@ -2,9 +2,17 @@
 
 class Book extends Product{
 
-    public function _construct($SKU, $Name, $Price, $ProductType, $Attributes){
-        parent::_construct($SKU, $Name, $Price, $ProductType, $Attributes);
+    public function _construct($ID, $SKU, $Name, $Price, $ProductType, $Attributes){
+        parent::_construct($ID, $SKU, $Name, $Price, $ProductType, $Attributes);
         $this -> ProductType = "Book";
+    }
+
+    public function setID($ID){
+        $this -> ID = $ID;
+    }
+
+    public function getID(){
+        return $this-> ID;
     }
 
     public function setSKU($SKU){
@@ -39,30 +47,16 @@ class Book extends Product{
         return $this-> ProductType;
     }
 
-    public function setAttributes(array $Weight){
-        $this -> Attributes =  "Weight: {$Weight[1]}KG";
+    public function setAttributes($Weight){
+        if(count($Weight) == 1){
+            $this -> Attributes =  "{$Weight[0]}";
+        }else{
+            $this -> Attributes =  "Weight: {$Weight[1]}KG";
+        }
     }
 
     public function getAttributes(){
         return $this-> Attributes;
-    }
-
-    public function Get(){
-        try{
-            $DataBase = new DBConnection();
-            $DB = $DataBase->OpenConnection();
-
-            $stmt = $DB->prepare("SELECT * FROM products WHERE ProductType  = 'BOOK'");
-            $stmt->execute() or die("Cannot fetch the data from the database, please try again.");
-            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-            $DataBase->CloseConnection();
-
-            return json_encode($result);  
-
-        }catch(PDOException $e){
-            echo "There is some problem in connection: " . $e->getMessage();
-        }
     }
 
     public function ADD(){
@@ -83,23 +77,6 @@ class Book extends Product{
 
         }catch(PDOException $e){
             echo "There is some problem in connection: " . $e->getMessage();
-        }
-    }
-
-    public function Delete($ID){
-        try{
-            $DataBase = new DBConnection();
-            $DB = $DataBase->OpenConnection();
-
-            $stmt = $DB->prepare("DELETE FROM products WHERE ID=:ID AND ProductType='Book'");
-            $stmt->bindparam(":ID",$ID);
-            $stmt->execute() or die("Cannot delete the data from the database, please try again.");
-
-            $DataBase->CloseConnection();
-
-        }catch(PDOException $e){
-            echo "There is some problem in connection: " . $e->getMessage();
-
         }
     }
 }

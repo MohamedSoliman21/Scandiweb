@@ -5,7 +5,7 @@ import LoadingSpinner from "../Components/LoadingSpinner";
 
 const Product_List = () => {
 
-    const URL = "/Scandiweb/Index.php";
+    const URL = "http://localhost/Scandiweb/Index.php";
     const [isLoading, setIsLoading] = useState(true);
     const [Products, setProducts] = useState([]);
     const [isChecked, setIsChecked] = useState([]);

@@ -11,7 +11,7 @@ const Add_Product = () => {
     const [IsDuplicate, setIsDuplicate] = useState()
     const [Products, setProducts] = useState([]);
     const navigate = useNavigate();
-    const URL = "/Scandiweb/Index.php"
+    const URL = "http://localhost/Scandiweb/Index.php"
     const [PType, setPType] = useState("");
 
     const options = [
@@ -91,8 +91,8 @@ const Add_Product = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let config = {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-        let Data = new URLSearchParams();
+        let config = {headers: {'Content-Type': 'multipart/form-data'}}
+        let Data = new FormData();
         Data.append("SKU", ProductData.sku);
         Data.append("Name", ProductData.name);
         Data.append("Price", ProductData.price);
@@ -106,6 +106,8 @@ const Add_Product = () => {
             axios.post(URL, ProductData, config)
             .then((result) => {
                 if(result.status === 200){
+                    console.log(ProductData)
+                    console.log(Data)
                     navigate("/");
                 }
             })

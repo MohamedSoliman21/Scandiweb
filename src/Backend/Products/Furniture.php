@@ -2,9 +2,17 @@
 
 class Furniture extends Product{
 
-    public function _construct($SKU, $Name, $Price, $ProductType, $Dimensions){
-        parent::_construct($SKU, $Name, $Price, $ProductType);
+    public function _construct($ID, $SKU, $Name, $Price, $ProductType, $Dimensions){
+        parent::_construct($ID, $SKU, $Name, $Price, $ProductType);
         $this -> ProductType = "Furniture";
+    }
+
+    public function setID($ID){
+        $this -> ID = $ID;
+    }
+
+    public function getID(){
+        return $this-> ID;
     }
 
     public function setSKU($SKU){
@@ -39,31 +47,18 @@ class Furniture extends Product{
         return $this-> ProductType;
     }
 
-    public function setAttributes(array $Dimensions){
-        $this -> Attributes =  "Dimensions: {$Dimensions[2][0]}x{$Dimensions[2][1]}x{$Dimensions[2][2]}";
+    public function setAttributes($Dimensions){
+        if(count($Dimensions) == 1){
+            $this -> Attributes =  "{$Dimensions[0]}";
+        }else{
+            $this -> Attributes =  "Dimensions: {$Dimensions[2][0]}x{$Dimensions[2][1]}x{$Dimensions[2][2]}";
+        }
     }
 
     public function getAttributes(){
         return $this-> Attributes;
     }
 
-    public function Get(){
-        try{
-            $DataBase = new DBConnection();
-            $DB = $DataBase->OpenConnection();
-
-            $stmt = $DB->prepare("SELECT * FROM products WHERE ProductType = 'Furniture'");
-            $stmt->execute() or die("Cannot fetch the data from the database, please try again.");
-            $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
-            $DataBase->CloseConnection();
-
-            return json_encode($result);
-            
-        }catch(PDOException $e){
-            echo "There is some problem in connection: " . $e->getMessage();
-        }
-    }
     
     public function ADD(){
         try{
@@ -76,11 +71,6 @@ class Furniture extends Product{
             $stmt->bindParam(':Price', $this->getPrice());
             $stmt->bindParam(':Attributes', $this->getAttributes());
             $stmt->bindValue(':ProductType', "Furniture");
-
-            $this->setSKU($_REQUEST["SKU"]);
-            $this->setName($_REQUEST["Name"]);
-            $this->setPrice($_REQUEST["Price"]);
-            $this->setAttributes(array($_REQUEST["Height"], $_REQUEST["Width"], $_REQUEST["Length"]));
             
             $stmt->execute() or die("Cannot add the data to the database, please try again.");
 
@@ -88,23 +78,6 @@ class Furniture extends Product{
 
         }catch(PDOException $e){
             echo "There is some problem in connection: " . $e->getMessage();
-        }
-    }
-
-    public function Delete($ID){
-        try{
-            $DataBase = new DBConnection();
-            $DB = $DataBase->OpenConnection();
-
-            $stmt = $DB->prepare("DELETE FROM products WHERE ID=:ID AND ProductType='Furniture'");
-            $stmt->bindparam(":ID",$ID);
-            $stmt->execute() or die("Cannot delete the data from the database, please try again.");
-
-            $DataBase->CloseConnection();
-
-        }catch(PDOException $e){
-            echo "There is some problem in connection: " . $e->getMessage();
-
         }
     }
 }

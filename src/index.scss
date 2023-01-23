@@ -1,7 +1,7 @@
 
 $L_btn_color: green;
 $R_btn_color: red;
-$Text_Color: white;
+$White_Color: white;
 $Black_Color: black;
 $flex_Display: flex;
 
@@ -33,37 +33,37 @@ $flex_Display: flex;
   }
   #add-product-btn{
     background-color: $L_btn_color;
-    color: $Text_Color;
+    color: $White_Color;
   }
   #add-product-btn:hover{
-      background-color: $Text_Color;
+      background-color: $White_Color;
       color: $L_btn_color;
       border-color: $L_btn_color;
   }
   #delete-product-btn{
     background-color: $R_btn_color;
-    color: $Text_Color;
+    color: $White_Color;
   }
   #delete-product-btn:hover{
-    background-color: $Text_Color;
+    background-color: $White_Color;
     color: $R_btn_color;
     border-color: $R_btn_color;
   }
   #save-btn{
     background-color: $L_btn_color;
-    color: $Text_Color;
+    color: $White_Color;
   }
   #save-btn:hover{
-    background-color: $Text_Color;
+    background-color: $White_Color;
     color: $L_btn_color;
     border-color: $L_btn_color;
   }
   #cancel-btn{
     background-color: $R_btn_color;
-    color: $Text_Color;
+    color: $White_Color;
   }
   #cancel-btn:hover{
-    background-color: $Text_Color;
+    background-color: $White_Color;
     color: $R_btn_color;
     border-color: $R_btn_color;
   }
@@ -152,6 +152,7 @@ $flex_Display: flex;
   bottom: 0;
   padding: 1rem;
   border-top: 1px solid $Black_Color;
+  background-color: $White_Color;
   text-align: center;
   width: 77%;
   max-width: 77%;
