@@ -1,7 +1,7 @@
-import Product_List from './Frontend/Pages/Product_List';
-import Add_Product from './Frontend/Pages/Add_Product';
+import Product_List from './Pages/Product_List';
+import Add_Product from './Pages/Add_Product';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Footer from './Frontend/Components/Footer';
+import Footer from './Components/Footer';
 
 function App() {
   return (

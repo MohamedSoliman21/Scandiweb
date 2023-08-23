@@ -7,7 +7,7 @@ Class DBConnection {
 
 private $server = "mysql:host=localhost;dbname=scandiweb";
 private $user = "root";
-private $pass = "";
+private $pass = "root";
 private $options  = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,);
 
 protected $conn;
